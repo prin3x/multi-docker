@@ -1,0 +1,36 @@
+language: generic 
+
+sudo: required
+services:
+  - docker
+
+before_install:
+  - docker build -t prin3x/multi-docker -f Dockerfile.dev ./client/Dockerfile.dev ./client
+
+script:
+  - docker run -e CI=true prin3x/multi-docker npm run test
+
+after_success:
+  - docker build -t prin3x/multi-client ./client
+  - docker build -t prin3x/multi-nginx ./nginx
+  - docker build -t prin3x/multi-worker ./worker
+  - docker build -t prin3x/multi-server ./server
+  # push to dokcer hub
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+  - docker push prin3x/multi-client
+  - docker push -t prin3x/multi-nginx
+  - docker push -t prin3x/multi-worker
+  - docker push -t prin3x/multi-server
+
+
+# deploy:
+#   provider: elasticbeanstalk
+#   region: "ap-southeast-1"
+#   app: "multi-docker"
+#   env: "Dockerreact-env"
+#   bucket_name: "elasticbeanstalk-ap-southeast-1-291834780597"
+#   bucket_path: "multi-docker"
+#   on:
+#     branch: main
+#   access_key_id: $AWS_ACCESS_KEY
+#   secret_access_key: "$AWS_SECRET_KEY"
