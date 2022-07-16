@@ -23,14 +23,14 @@ after_success:
   - docker push prin3x/multi-server
 
 
-# deploy:
-#   provider: elasticbeanstalk
-#   region: "ap-southeast-1"
-#   app: "multi-docker"
-#   env: "Dockerreact-env"
-#   bucket_name: "elasticbeanstalk-ap-southeast-1-291834780597"
-#   bucket_path: "multi-docker"
-#   on:
-#     branch: main
-#   access_key_id: $AWS_ACCESS_KEY
-#   secret_access_key: "$AWS_SECRET_KEY"
+deploy:
+  provider: elasticbeanstalk
+  region: "ap-southeast-1"
+  app: "multi-docker"
+  env: "Dockerreact-env"
+  bucket_name: "elasticbeanstalk-ap-southeast-1-291834780597"
+  bucket_path: "docker-multi"
+  on:
+    branch: main
+  access_key_id: $AWS_ACCESS_KEY
+  secret_access_key: "$AWS_SECRET_KEY"
