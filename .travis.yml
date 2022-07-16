@@ -18,9 +18,9 @@ after_success:
   # push to dokcer hub
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
   - docker push prin3x/multi-client
-  - docker push -t prin3x/multi-nginx
-  - docker push -t prin3x/multi-worker
-  - docker push -t prin3x/multi-server
+  - docker push prin3x/multi-nginx
+  - docker push prin3x/multi-worker
+  - docker push prin3x/multi-server
 
 
 # deploy:
